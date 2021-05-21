@@ -1,23 +1,14 @@
-// export default fetchCountries(searchQuery)
+import { onFetchError } from './input-script.js';
 
-// Есть файл fetchCountries.js с дефолтным экспортом функции fetchCountries(searchQuery),
-//   возвращающей промис с массивом стран, результат запроса к API.
+const BASE_URL = 'https://restcountries.eu/rest/v2';
 
-import countryCardTpl from '../templates/country-card.hbs';
-
-const countryContainer = document.querySelector('.country-container')
-
-// fetchCountries(eesti).then(appendCountryMarkup).catch(error => console.log(error));
-
-export default function fetchCountries(name) {
-  return fetch(`https://restcountries.eu/rest/v2/name/${name}`)
-    .then(r => {
-      return r.json()})
+function fetchCountries(searchQuery) {
+  const url = `${BASE_URL}/name/${searchQuery}`;
+  // if (response.ok) return response.json();
+  return fetch(url).then(response => {
+    if (response.ok) return response.json();
+    onFetchError();
+  });
 };
 
-
-function appendCountryMarkup(country) {
-  const markup = countryCardTpl(country);
-  // countryContainer.innerHTML = markup;
-  countryContainer.insertAdjacentHTML('beforeend', markup);
-}
+export default { fetchCountries };
