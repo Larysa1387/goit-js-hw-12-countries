@@ -5,11 +5,19 @@
 
 import countryCardTpl from '../templates/country-card.hbs';
 
-const f = fetch('https://restcountries.eu/rest/v2/all').then(r =>
-  r.json()).then(country => {
-    const markup = countryCardTpl(country)
-    console.log(markup);
-  })
-  .catch(error =>
-    console.log(error));
-// console.log(f);
+const countryContainer = document.querySelector('.country-container')
+
+// fetchCountries(eesti).then(appendCountryMarkup).catch(error => console.log(error));
+
+export default function fetchCountries(name) {
+  return fetch(`https://restcountries.eu/rest/v2/name/${name}`)
+    .then(r => {
+      return r.json()})
+};
+
+
+function appendCountryMarkup(country) {
+  const markup = countryCardTpl(country);
+  // countryContainer.innerHTML = markup;
+  countryContainer.insertAdjacentHTML('beforeend', markup);
+}
