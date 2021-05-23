@@ -1,0 +1,14 @@
+.country-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countries-list{
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.list-item {
+  padding-bottom: 8px;
+}
