@@ -16,13 +16,15 @@ function onInputSearch(e) {
   if (searchQuery.length < 1) {
     return;
   }
-
-  API.fetchCountries(searchQuery)
-    .then(createPageMarkup)
-    .catch(onFetchError);
+  if(refs.input.value !==""){
+    API.fetchCountries(searchQuery)
+      .then(createPageMarkup)
+      .catch(onFetchError);
+  }
 }
 
 function createPageMarkup(country) {
+  console.log('find countries:', country.length);
   if (country.length === 1) {
     appendCountryMarkup(country);
   } else if (country.length >= 2 && country.length < 10) {
