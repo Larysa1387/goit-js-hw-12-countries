@@ -16,7 +16,7 @@ function onInputSearch(e) {
   if (searchQuery.length < 1) {
     return;
   }
-  if(refs.input.value !==""){
+  if(refs.input.value.trim() !== '') {
     API.fetchCountries(searchQuery)
       .then(createPageMarkup)
       .catch(onFetchError);
