@@ -1,5 +1,3 @@
-import { onFetchError } from './input-script.js';
-
 const BASE_URL = 'https://restcountries.eu/rest/v2';
 
 function fetchCountries(searchQuery) {
@@ -8,8 +6,9 @@ function fetchCountries(searchQuery) {
   return fetch(url)
     .then(response => {
       if (response.ok) return response.json();
+
+      // throw new Error(response.statusText);
     })
-    // .catch(onFetchError);
 };
 
 export default { fetchCountries };

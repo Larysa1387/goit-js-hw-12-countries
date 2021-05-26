@@ -1,5 +1,5 @@
 var debounce = require('lodash.debounce');
-import { error } from './pnotify-error';
+import { onFetchError, onDecreaseRequestError } from './pnotify-error';
 import countryCardTpl from '../templates/country-card.hbs';
 import countryListTpl from '../templates/country-list.hbs';
 import getRefs from './get-refs.js';
@@ -13,10 +13,7 @@ function onInputSearch(e) {
   refs.countryContainer.innerHTML = '';
   const searchQuery = e.target.value;
 
-  if (searchQuery.length < 1) {
-    return;
-  }
-  if(refs.input.value.trim() !== '') {
+  if (refs.input.value.trim() !== '') {
     API.fetchCountries(searchQuery)
       .then(createPageMarkup)
       .catch(onFetchError);
@@ -30,10 +27,7 @@ function createPageMarkup(country) {
   } else if (country.length >= 2 && country.length < 10) {
     appendListMarkup(country);
   } else if (country.length > 10) {
-    error({
-      title: 'Too many matches found. Please enter a more specific query!',
-      delay: 2000,
-    });
+    onDecreaseRequestError();
   }
 }
 
@@ -46,9 +40,3 @@ function appendListMarkup(country) {
   const markup = countryListTpl(country);
   refs.countryContainer.insertAdjacentHTML('beforeend', markup);
 }
-
-function onFetchError() {
-  alert('Sorry, try once more');
-}
-
-export default { onFetchError };
